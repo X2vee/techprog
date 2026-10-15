@@ -21,6 +21,8 @@ public:
     virtual void print() const = 0;
     virtual Base* clone() const = 0; 
     virtual const char* getType() const = 0; 
+    virtual void save(std::ostream& out) const = 0;
+    virtual void load(std::istream& in) = 0;
 
     const char* getName() const;
     void setName(const char* newName);

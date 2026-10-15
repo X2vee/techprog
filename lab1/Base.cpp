@@ -2,19 +2,19 @@
 
 #pragma warning(disable: 4996)
 
-//РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
+//Конструкторы
 Base::Base() : name(nullptr), cargoVolume(0.0) {
-    std::cout << "[Base] Р’С‹Р·РІР°РЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ" << std::endl;
+    std::cout << "[Base] Вызван конструктор по умолчанию" << std::endl;
 }
 
 Base::Base(const char* newName, double newVolume) : name(nullptr), cargoVolume(0.0) {
-    std::cout << "[Base] Р’С‹Р·РІР°РЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё" << std::endl;
+    std::cout << "[Base] Вызван конструктор с параметрами" << std::endl;
     setName(newName);
     setCargoVolume(newVolume);
 }
 
 Base::Base(const Base& other) : name(nullptr), cargoVolume(0.0) {
-    std::cout << "[Base] Р’С‹Р·РІР°РЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ" << std::endl;
+    std::cout << "[Base] Вызван конструктор копирования" << std::endl;
     if (other.name) {
         name = new char[strlen(other.name) + 1];
         std::strcpy(name, other.name);
@@ -22,15 +22,15 @@ Base::Base(const Base& other) : name(nullptr), cargoVolume(0.0) {
     cargoVolume = other.cargoVolume;
 }
 
-//Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
+//Деструктор
 Base::~Base() {
-    std::cout << "[Base] Р’С‹Р·РІР°РЅ РґРµСЃС‚СЂСѓРєС‚РѕСЂ" << std::endl;
+    std::cout << "[Base] Вызван деструктор" << std::endl;
     delete[] name; 
 }
 
-//Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
+//Геттеры и сеттеры
 const char* Base::getName() const {
-    return name ? name : "РќРµ СѓРєР°Р·Р°РЅРѕ";
+    return name ? name : "Не указано";
 }
 
 void Base::setName(const char* newName) {
@@ -50,7 +50,7 @@ double Base::getCargoVolume() const {
 
 void Base::setCargoVolume(double volume) {
     if (volume < 0.0) {
-        throw std::invalid_argument("РћС€РёР±РєР°: РћР±СЉРµРј РїРµСЂРµРІРѕР·РёРјРѕРіРѕ РіСЂСѓР·Р° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рј!");
+        throw std::invalid_argument("Ошибка: Объем перевозимого груза не может быть отрицательным!");
     }
     cargoVolume = volume;
 }
