@@ -10,35 +10,35 @@
 
 class Keeper {
 private:
-    Base** items;    // Массив указателей на базовый класс
-    int count;       // Текущее количество элементов
-    int capacity;    // Выделенная емкость массива
+    Base** items; 
+    int count; // Текущее количество элементов
+    int capacity; // Выделенная емкость массива
 
-    void resize();   // Вспомогательный метод для увеличения массива
+    void resize(); // Вспомогательный метод для увеличения массива
 
 public:
-    // --- Конструкторы и деструктор ---
+    // Конструкторы и деструктор
     Keeper();
     Keeper(const Keeper& other);
     ~Keeper();
 
-    // --- Основные методы управления ---
-    void addItem(Base* item); // Добавляет объект (Keeper забирает владение указателем)
+    // Основные методы управления
+    void addItem(Base* item); 
     void removeItem(int index);
-    void clear(); // Полная очистка контейнера
+    void clear(); 
 
-    // --- Просмотр данных ---
+    // Просмотр данных
     void printAll() const;
     Base* getItem(int index) const;
     int getCount() const;
 
-    // --- Работа с файлами ---
+    // Работа с файлами
     void saveToFile(const char* filename) const;
     void loadFromFile(const char* filename);
 
-    // --- Переопределение операторов (требование методички) ---
+    // Переопределение операторов 
     Keeper& operator=(const Keeper& other);
-    bool operator==(const Keeper& other) const; // Сравнение по количеству элементов
+    bool operator==(const Keeper& other) const; 
 };
 
-#endif // KEEPER_H
+#endif

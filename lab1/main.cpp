@@ -1,10 +1,11 @@
 #include <iostream>
-#include <locale.h>
+#include <windows.h>
 #include <stdexcept>
 #include "Keeper.h"
 
 int main() {
-    setlocale(LC_ALL, "Russian");
+    SetConsoleCP(1251);           
+    SetConsoleOutputCP(1251);
 
     Keeper keeper;
     int choice = 0;

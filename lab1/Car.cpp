@@ -175,17 +175,14 @@ const char* Car::getType() const {
     return "Автомобиль";
 }
 
-// Переопределение операторов
-
+// Переопределение операторор
 bool Car::operator==(const Car& other) const {
-    // Сравниваем марку и модель
     bool brandMatch = (brand == other.brand) || (brand && other.brand && std::strcmp(brand, other.brand) == 0);
     bool modelMatch = (model == other.model) || (model && other.model && std::strcmp(model, other.model) == 0);
     return brandMatch && modelMatch;
 }
 
 // Геттеры и сеттеры
-
 int Car::getYear() const { return year; }
 
 void Car::setYear(int newYear) {

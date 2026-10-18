@@ -1,21 +1,20 @@
-#include "Airplane.h"
+п»ї#include "Airplane.h"
 #include <cstring>
 #include <stdexcept>
 
 #pragma warning(disable: 4996)
 
-// Конструкторы
-
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 Airplane::Airplane() : Base(), type(nullptr), dimensions(nullptr),
 cities(nullptr), citiesCount(0) {
-    std::cout << "[Airplane] Вызван конструктор по умолчанию" << std::endl;
+    std::cout << "[Airplane] Р’С‹Р·РІР°РЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ" << std::endl;
 }
 
 Airplane::Airplane(const char* name, double cargoVolume, const char* newType,
     const char* newDimensions, const char** citiesList, int citiesNum)
     : Base(name, cargoVolume), type(nullptr), dimensions(nullptr),
     cities(nullptr), citiesCount(0) {
-    std::cout << "[Airplane] Вызван конструктор с параметрами" << std::endl;
+    std::cout << "[Airplane] Р’С‹Р·РІР°РЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё" << std::endl;
     setAirplaneType(newType);
     setDimensions(newDimensions);
     setCities(citiesList, citiesNum);
@@ -24,7 +23,7 @@ Airplane::Airplane(const char* name, double cargoVolume, const char* newType,
 Airplane::Airplane(const Airplane& other)
     : Base(other), type(nullptr), dimensions(nullptr),
     cities(nullptr), citiesCount(0) {
-    std::cout << "[Airplane] Вызван конструктор копирования" << std::endl;
+    std::cout << "[Airplane] Р’С‹Р·РІР°РЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ" << std::endl;
     if (other.type) {
         type = new char[strlen(other.type) + 1];
         std::strcpy(type, other.type);
@@ -48,10 +47,9 @@ Airplane::Airplane(const Airplane& other)
     }
 }
 
-// Деструктор
-
+// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
 Airplane::~Airplane() {
-    std::cout << "[Airplane] Вызван деструктор" << std::endl;
+    std::cout << "[Airplane] Р’С‹Р·РІР°РЅ РґРµСЃС‚СЂСѓРєС‚РѕСЂ" << std::endl;
     delete[] type;
     delete[] dimensions;
     for (int i = 0; i < citiesCount; ++i) {
@@ -60,51 +58,54 @@ Airplane::~Airplane() {
     delete[] cities;
 }
 
-// Переопределение виртуальных функций
-
+// РџРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµ РІРёСЂС‚СѓР°Р»СЊРЅС‹С… С„СѓРЅРєС†РёР№
 void Airplane::input() {
-    std::cout << "\n=== Ввод данных о самолёте ===" << std::endl;
+    std::cout << "\n=== Р’РІРѕРґ РґР°РЅРЅС‹С… Рѕ СЃР°РјРѕР»С‘С‚Рµ ===" << std::endl;
 
-    // Ввод наименования
+    // Р’РІРѕРґ РЅР°РёРјРµРЅРѕРІР°РЅРёСЏ
     char buffer[256];
-    std::cout << "Наименование: ";
+    std::cout << "РќР°РёРјРµРЅРѕРІР°РЅРёРµ: ";
     std::cin.ignore();
     std::cin.getline(buffer, 256);
     setName(buffer);
 
-    // Ввод объёма груза
+    // Р’РІРѕРґ РѕР±СЉС‘РјР° РіСЂСѓР·Р°
     double volume;
-    std::cout << "Объём перевозимого груза (тонн): ";
+    std::cout << "РћР±СЉС‘Рј РїРµСЂРµРІРѕР·РёРјРѕРіРѕ РіСЂСѓР·Р° (С‚РѕРЅРЅ): ";
     std::cin >> volume;
     setCargoVolume(volume);
 
-    // Ввод типа
-    std::cout << "Тип самолёта: ";
+    // Р’РІРѕРґ С‚РёРїР°
+    std::cout << "РўРёРї СЃР°РјРѕР»С‘С‚Р°: ";
     std::cin.ignore();
     std::cin.getline(buffer, 256);
     setAirplaneType(buffer);
 
-    // Ввод габаритов
-    std::cout << "Габариты (например, 70x60x15 м): ";
+    // Р’РІРѕРґ РіР°Р±Р°СЂРёС‚РѕРІ
+    std::cout << "Р“Р°Р±Р°СЂРёС‚С‹ (РЅР°РїСЂРёРјРµСЂ, 70x60x15 Рј): ";
     std::cin.getline(buffer, 256);
     setDimensions(buffer);
 
-    // Ввод городов
+    // Р’РІРѕРґ РіРѕСЂРѕРґРѕРІ
     int num;
-    std::cout << "Количество городов: ";
+    std::cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ РіРѕСЂРѕРґРѕРІ: ";
     std::cin >> num;
     if (num < 0) {
-        throw std::invalid_argument("Ошибка: количество городов не может быть отрицательным!");
+        throw std::invalid_argument("РћС€РёР±РєР°: РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕСЂРѕРґРѕРІ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рј!");
     }
     if (num > 0) {
         const char** tempCities = new const char* [num];
+        std::cin.ignore(); 
         for (int i = 0; i < num; ++i) {
-            std::cout << "Город " << (i + 1) << ": ";
-            std::cin.ignore();
+            std::cout << "Р“РѕСЂРѕРґ " << (i + 1) << ": ";
             std::cin.getline(buffer, 256);
-            tempCities[i] = buffer;
+            tempCities[i] = new char[strlen(buffer) + 1];
+            std::strcpy(const_cast<char*>(tempCities[i]), buffer);
         }
         setCities(tempCities, num);
+        for (int i = 0; i < num; ++i) {
+            delete[] tempCities[i];
+        }
         delete[] tempCities;
     }
     else {
@@ -113,12 +114,12 @@ void Airplane::input() {
 }
 
 void Airplane::print() const {
-    std::cout << "\n--- Самолёт ---" << std::endl;
-    std::cout << "Наименование: " << getName() << std::endl;
-    std::cout << "Объём груза: " << getCargoVolume() << " т" << std::endl;
-    std::cout << "Тип: " << (type ? type : "Не указан") << std::endl;
-    std::cout << "Габариты: " << (dimensions ? dimensions : "Не указаны") << std::endl;
-    std::cout << "Города: ";
+    std::cout << "\n--- РЎР°РјРѕР»С‘С‚ ---" << std::endl;
+    std::cout << "РќР°РёРјРµРЅРѕРІР°РЅРёРµ: " << getName() << std::endl;
+    std::cout << "РћР±СЉС‘Рј РіСЂСѓР·Р°: " << getCargoVolume() << " С‚" << std::endl;
+    std::cout << "РўРёРї: " << (type ? type : "РќРµ СѓРєР°Р·Р°РЅ") << std::endl;
+    std::cout << "Р“Р°Р±Р°СЂРёС‚С‹: " << (dimensions ? dimensions : "РќРµ СѓРєР°Р·Р°РЅС‹") << std::endl;
+    std::cout << "Р“РѕСЂРѕРґР°: ";
     if (cities && citiesCount > 0) {
         for (int i = 0; i < citiesCount; ++i) {
             std::cout << cities[i];
@@ -126,7 +127,7 @@ void Airplane::print() const {
         }
     }
     else {
-        std::cout << "Нет данных";
+        std::cout << "РќРµС‚ РґР°РЅРЅС‹С…";
     }
     std::cout << std::endl;
 }
@@ -136,13 +137,13 @@ Base* Airplane::clone() const {
 }
 
 const char* Airplane::getType() const {
-    return "Самолёт";
+    return "РЎР°РјРѕР»С‘С‚";
 }
 
-// Геттеры и сеттеры 
+// Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹ 
 
 const char* Airplane::getAirplaneType() const {
-    return type ? type : "Не указан";
+    return type ? type : "РќРµ СѓРєР°Р·Р°РЅ";
 }
 
 void Airplane::setAirplaneType(const char* newType) {
@@ -157,7 +158,7 @@ void Airplane::setAirplaneType(const char* newType) {
 }
 
 const char* Airplane::getDimensions() const {
-    return dimensions ? dimensions : "Не указаны";
+    return dimensions ? dimensions : "РќРµ СѓРєР°Р·Р°РЅС‹";
 }
 
 void Airplane::setDimensions(const char* newDimensions) {
@@ -177,9 +178,9 @@ int Airplane::getCitiesCount() const {
 
 const char* Airplane::getCity(int index) const {
     if (index < 0 || index >= citiesCount) {
-        throw std::out_of_range("Ошибка: индекс города вне диапазона!");
+        throw std::out_of_range("РћС€РёР±РєР°: РёРЅРґРµРєСЃ РіРѕСЂРѕРґР° РІРЅРµ РґРёР°РїР°Р·РѕРЅР°!");
     }
-    return cities[index] ? cities[index] : "Не указан";
+    return cities[index] ? cities[index] : "РќРµ СѓРєР°Р·Р°РЅ";
 }
 
 void Airplane::setCities(const char** citiesList, int citiesNum) {

@@ -7,7 +7,7 @@
 
 class Base {
 protected:
-    char* name;          // Наименование перевозчика
+    char* name; // Наименование перевозчика
     double cargoVolume;  // Объем перевозимого груза
 
 public:
