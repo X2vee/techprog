@@ -144,10 +144,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
+    <ClInclude Include="Keeper.h" />
     <ClInclude Include="Train.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base.cpp" />
+    <ClCompile Include="Keeper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Train.cpp" />
   </ItemGroup>

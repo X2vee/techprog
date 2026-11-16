@@ -1,28 +1,111 @@
 #include <iostream>
 #include <windows.h>
 #include <stdexcept>
-#include "Train.h"
+#include "Keeper.h"
 
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    std::cout << "=== Проверка иерархии классов Base и TRAIN ===" << std::endl;
+    Keeper keeper;
+    int choice = 0;
+    bool isRunning = true;
 
-    try {
-        TRAIN t1;
-        TRAIN t2("Москва", 102, 23, 55);
-        std::cout << "Объект t2: " << t2 << std::endl;
+    while (isRunning) {
+        std::cout << "\n--- Главное меню (Задание 1: Поезда) ---" << std::endl;
+        std::cout << "1. Добавить поезд на указанную позицию" << std::endl;
+        std::cout << "2. Удалить запись о поезде" << std::endl;
+        std::cout << "3. Изменить данные о поезде" << std::endl;
+        std::cout << "4. Вывести расписание всех поездов" << std::endl;
+        std::cout << "5. Найти поезд по номеру" << std::endl;
+        std::cout << "6. Проверить конструктор копирования Keeper" << std::endl;
+        std::cout << "0. Выход из программы" << std::endl;
+        std::cout << "Ваш выбор: ";
 
-        TRAIN t3(t2);
-        std::cout << "Объект t3 (копия): " << t3 << std::endl;
+        try {
+            if (!(std::cin >> choice)) {
+                throw std::invalid_argument("Ошибка: введен некорректный символ! Ожидалось число.");
+            }
 
-        std::cout << "\nВведите данные для поезда t1:" << std::endl;
-        std::cin >> t1;
-        std::cout << "Введенный поезд t1: " << t1 << std::endl;
-    }
-    catch (const std::exception& e) {
-        std::cout << "Исключение: " << e.what() << std::endl;
+            switch (choice) {
+            case 1: {
+                int pos;
+                std::cout << "Введите позицию вставки (от 1 до " << (keeper.getCount() + 1) << "): ";
+                if (!(std::cin >> pos)) {
+                    throw std::invalid_argument("Ошибка: позиция должна быть числом!");
+                }
+
+                std::cout << "\n=== Ввод данных о поезде ===" << std::endl;
+                TRAIN* newTrain = new TRAIN();
+                try {
+                    std::cin >> *newTrain;
+                    keeper.insertItem(newTrain, pos - 1);
+                }
+                catch (...) {
+                    delete newTrain;
+                    throw;
+                }
+                std::cout << "Поезд успешно добавлен и упорядочен по номеру!" << std::endl;
+                break;
+            }
+            case 2: {
+                keeper.printAll();
+                if (keeper.getCount() > 0) {
+                    int index;
+                    std::cout << "Введите номер записи для удаления (начиная с 1): ";
+                    if (!(std::cin >> index)) {
+                        throw std::invalid_argument("Ошибка: индекс должен быть числом!");
+                    }
+                    keeper.removeItem(index - 1);
+                    std::cout << "Запись успешно удалена!" << std::endl;
+                }
+                break;
+            }
+            case 3: {
+                keeper.printAll();
+                if (keeper.getCount() > 0) {
+                    int index;
+                    std::cout << "Введите номер записи для изменения (начиная с 1): ";
+                    if (!(std::cin >> index)) {
+                        throw std::invalid_argument("Ошибка: индекс должен быть числом!");
+                    }
+                    keeper.editItem(index - 1);
+                    std::cout << "Данные о поезде успешно изменены!" << std::endl;
+                }
+                break;
+            }
+            case 4:
+                keeper.printAll();
+                break;
+            case 5: {
+                int trainNum;
+                std::cout << "Введите номер поезда для поиска: ";
+                if (!(std::cin >> trainNum)) {
+                    throw std::invalid_argument("Ошибка: номер поезда должен быть числом!");
+                }
+                keeper.findByTrainNumber(trainNum);
+                break;
+            }
+            case 6: {
+                std::cout << "\n--- Создание копии расписания ---" << std::endl;
+                Keeper copyKeeper(keeper);
+                copyKeeper.printAll();
+                std::cout << "--- Выход из области видимости копии ---" << std::endl;
+                break;
+            }
+            case 0:
+                isRunning = false;
+                std::cout << "Выход из программы..." << std::endl;
+                break;
+            default:
+                std::cout << "Ошибка: такого пункта меню не существует!" << std::endl;
+            }
+        }
+        catch (const std::exception& e) {
+            std::cout << "Исключение: " << e.what() << std::endl;
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+        }
     }
 
     return 0;
